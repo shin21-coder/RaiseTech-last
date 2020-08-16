@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="<?php language_attributes(); ?>">
 
 <head>
   <meta charset="UTF-8">
@@ -10,6 +10,7 @@
 </head>
 
 <body <?php body_class(); ?>>
+<?php wp_body_open(); ?>
   <div class="position">
 
     <header>

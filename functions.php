@@ -1,7 +1,7 @@
 <?php
-    add_theme_support( 'menus' );
     add_theme_support( 'title-tag' );
     add_theme_support( 'post-thumbnails' ); //新たに追加
+    add_theme_support( 'automatic-feed-links' );
     //functions.php
     function wpbeg_title( $title ) {
         if ( is_front_page() && is_home() ) { //トップページなら
@@ -26,6 +26,13 @@
     add_action( 'wp_enqueue_scripts', 'wpbeg_script' );
 
 
+    // Gutenberg用のCSSを読み込み、ビジュアルエディターを見やすくする
+    add_action( 'enqueue_block_editor_assets', 'gutenberg_stylesheets_custom_demo' );
+    function gutenberg_stylesheets_custom_demo() {
+        //現在適用しているテーマのeditor-style.cssを読み込む
+        $editor_style_url = get_theme_file_uri('/css/editor-style.css');
+        wp_enqueue_style( 'theme-editor-style', $editor_style_url );
+    }
 
 
 
@@ -48,3 +55,14 @@ function custom_attribute( $html ){
     $html = preg_replace('/(width|height)="\d*"\s/', '', $html); // width height を削除する
     return $html;
 }
+
+    // テーマチェック：待機状態のコメント返信のスクリプトを見つけることができません。プラグインとテーマの移行/2.7/Enhanced Comment Displayをご覧ください。
+    function demo_script() {
+        if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
+            wp_enqueue_script( 'comment-reply' );
+        }
+    }
+    add_action( 'wp_enqueue_scripts', 'demo_script' );
+
+    // テーマチェック：コンテンツの幅が定義されていません。
+    if ( ! isset( $content_width ) ) $content_width = 525;

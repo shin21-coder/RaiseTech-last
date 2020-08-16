@@ -20,4 +20,5 @@
 
 <?php endwhile; endif; ?>
   <!--▲縦書き固定サイドメニュー▲-->
+
 <?php get_footer();?>

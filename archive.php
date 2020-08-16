@@ -13,8 +13,8 @@
       <section>
 <?php $args = array("post_type" => "post",  'posts_per_page' => 3,); ?>
 <?php $the_query = new WP_Query($args); ?>
-<?php if($the_query->have_posts()) : ?>
-<?php while($the_query->have_posts()) : $the_query->the_post(); ?>
+<?php if(have_posts()) : ?>
+<?php while(have_posts()) : the_post(); ?>
         <div class="tizu">
           <img src="<?php echo esc_url( get_template_directory_uri() ); ?>/images/images/PCarchive_menu.jpg " alt="チーズバーガー" class="tizu__img">
           <div class="tizu__section">
@@ -39,7 +39,7 @@
 
       <div class="nav-links">
 			<?php if(function_exists('wp_pagenavi')): //ページナビプラグインがある時 ここから ?>
-			<?php wp_pagenavi(array('query'=>$the_query)); //ページナビプラグインを表示 ?>
+			<?php wp_pagenavi(); //ページナビプラグインを表示 ?>
 			<?php else : //ページナビプラグインがない時 ?>
 			<div class="alignleft"><?php previous_posts_link('前のページ') //前のページへのリンク ?></div>
 			<div class="alignright"><?php next_posts_link('次のページ') //次のページへのリンク ?></div>
@@ -61,5 +61,5 @@
 
   <!--▲縦書き固定サイドメニュー▲-->
 
-
+  <?php wp_link_pages( 'before=<p>&after=</p>&next_or_number=number&pagelink=page %' ); ?>
 <?php get_footer(); ?>
